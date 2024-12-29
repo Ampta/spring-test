@@ -10,13 +10,19 @@ import com.ampta.quickstart.service.impl.ColourPrinterImpl;
 @SpringBootApplication
 public class QuickstartApplication implements CommandLineRunner {
 
+	
+	private ColourPrinter colourPrinter;
+	
+	public QuickstartApplication(ColourPrinter colourPrinter) {
+		this.colourPrinter = colourPrinter;
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(QuickstartApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		final ColourPrinter colourPrinter = new ColourPrinterImpl();
 		System.out.println(colourPrinter.print());
 	}
 
