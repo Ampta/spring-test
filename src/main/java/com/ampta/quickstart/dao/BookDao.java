@@ -1,5 +1,7 @@
 package com.ampta.quickstart.dao;
 
-public interface BookDao {
+import com.ampta.quickstart.domain.Book;
 
+public interface BookDao {
+	void create(Book book);
 }
