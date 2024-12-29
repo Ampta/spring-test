@@ -11,9 +11,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.ampta.quickstart.TestDataUtil;
 import com.ampta.quickstart.domain.Author;
 
+import lombok.extern.slf4j.Slf4j;
+
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 public class AuthorDaoImplTests {
 	
 	@Mock
@@ -25,21 +29,18 @@ public class AuthorDaoImplTests {
 	@Test
 	public void testThatCreateAuthorGeneratesCurrectSql() {
 		
-		Author author = Author.builder()
-				.id(1L)
-				.name("Shivam Gupta")
-				.age(20)
-				.build();
-		
-		
+		Author author = TestDataUtil.createTestAuthor();
+		log.info("Author for test: {}", author);
 		underTest.create(author);
 		
 		verify(jdbcTemplate).update(
 				eq("INSERT INTO authors (id, name, age) VALUES (?, ?, ?)"),
 				eq(1L), eq("Shivam Gupta"), eq(20)
 				);
+		
+		log.info("CreateAuthor Successfully executed");
 	}
-	
+
 	@Test
 	public void testThatFindOneAuthorGeneratesCurrectSql() {
 		underTest.findOne(1L);
@@ -48,6 +49,8 @@ public class AuthorDaoImplTests {
 				eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"), 
 				any(AuthorDaoImpl.AuthorRowMapper.class),
 				eq(1L));
+		
+		log.info("FindAuthor Successfully executed");
 	}
 	
 }

@@ -7,10 +7,12 @@ import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import com.ampta.quickstart.dao.BookDao;
 import com.ampta.quickstart.domain.Book;
 
+@Component
 public class BookDaoImpl implements BookDao{
 
 	private final JdbcTemplate jdbcTemplate;

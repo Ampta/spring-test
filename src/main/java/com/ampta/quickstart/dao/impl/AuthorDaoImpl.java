@@ -8,10 +8,12 @@ import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import com.ampta.quickstart.dao.AuthorDao;
 import com.ampta.quickstart.domain.Author;
 
+@Component
 public class AuthorDaoImpl implements AuthorDao {
 	
 	private final JdbcTemplate jdbcTemplate;
