@@ -1,8 +1,10 @@
 package com.ampta.quickstart.service.impl;
 
-import com.ampta.quickstart.service.GreenPrinter;
-import com.ampta.quickstart.service.RedPrinter;
+import org.springframework.stereotype.Component;
 
+import com.ampta.quickstart.service.GreenPrinter;
+
+@Component
 public class EnglishGreenPrinter implements GreenPrinter {
 
 	@Override

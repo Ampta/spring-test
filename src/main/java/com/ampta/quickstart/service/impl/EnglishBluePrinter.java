@@ -1,8 +1,10 @@
 package com.ampta.quickstart.service.impl;
 
-import com.ampta.quickstart.service.BluePrinter;
-import com.ampta.quickstart.service.RedPrinter;
+import org.springframework.stereotype.Component;
 
+import com.ampta.quickstart.service.BluePrinter;
+
+@Component
 public class EnglishBluePrinter implements BluePrinter {
 
 	@Override

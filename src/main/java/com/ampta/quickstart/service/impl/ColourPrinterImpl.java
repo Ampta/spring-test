@@ -1,10 +1,13 @@
 package com.ampta.quickstart.service.impl;
 
+import org.springframework.stereotype.Component;
+
 import com.ampta.quickstart.service.BluePrinter;
 import com.ampta.quickstart.service.ColourPrinter;
 import com.ampta.quickstart.service.GreenPrinter;
 import com.ampta.quickstart.service.RedPrinter;
 
+@Component
 public class ColourPrinterImpl implements ColourPrinter{
 
 	private RedPrinter redPrinter;
