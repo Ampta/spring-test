@@ -1,20 +1,22 @@
 package com.ampta.quickstart;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ampta.quickstart.service.ColourPrinter;
-import com.ampta.quickstart.service.impl.ColourPrinterImpl;
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
-public class QuickstartApplication implements CommandLineRunner {
+@Slf4j
+public class QuickstartApplication implements CommandLineRunner{
 
+	private final DataSource dataSource;
 	
-	private ColourPrinter colourPrinter;
-	
-	public QuickstartApplication(ColourPrinter colourPrinter) {
-		this.colourPrinter = colourPrinter;
+	public QuickstartApplication(final DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 	
 	public static void main(String[] args) {
@@ -23,7 +25,11 @@ public class QuickstartApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(colourPrinter.print());
+		log.info("DataSource: {}", dataSource.toString());
+		final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		jdbcTemplate.execute("select 1");
 	}
+
+	
 
 }

@@ -1,0 +1,17 @@
+#https://docs.spring.io/spring-boot/appendix/application-properties/index.html#appendix.application-properties.core
+
+#spring.application.name=quickstart
+#server.port=8181
+
+server:
+  port: 8282
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
