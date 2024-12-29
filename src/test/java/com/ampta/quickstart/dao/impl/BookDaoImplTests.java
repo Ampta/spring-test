@@ -48,4 +48,13 @@ public class BookDaoImplTests {
 				eq("898-1-4744-4373-5")
 		);
 	}
+	
+	@Test
+	public void testThatFindManyGeneratesCurrectSql() {
+		underTest.findMany();
+		
+		verify(jdbcTemplate).query(
+					eq("SELECT isbn, title, author_id FROM books"), 
+					any(BookDaoImpl.BookRowMapper.class));
+	}
 }
