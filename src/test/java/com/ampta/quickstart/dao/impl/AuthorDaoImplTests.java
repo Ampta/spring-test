@@ -1,5 +1,6 @@
-package com.ampta.quickstart.dao;
+package com.ampta.quickstart.dao.impl;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -10,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ampta.quickstart.dao.impl.AuthorDaoImpl;
 import com.ampta.quickstart.domain.Author;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,6 +40,14 @@ public class AuthorDaoImplTests {
 				);
 	}
 	
-	
+	@Test
+	public void testThatFindOneAuthorGeneratesCurrectSql() {
+		underTest.findOne(1L);
+		
+		verify(jdbcTemplate).query(
+				eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"), 
+				any(AuthorDaoImpl.AuthorRowMapper.class),
+				eq(1L));
+	}
 	
 }

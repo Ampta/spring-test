@@ -1,5 +1,6 @@
-package com.ampta.quickstart.dao;
+package com.ampta.quickstart.dao.impl;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -37,10 +38,17 @@ public class BookDaoImplTests {
 				eq("898-1-4744-4373-5"),
 				eq("Anjali Changed my Life"),
 				eq(1L)
-				
-				
 		);
+	}
+	
+	@Test
+	public void testThatFindOneBookGeneratesCurrectSql() {
+		underTest.findByIsbn("898-1-4744-4373-5");
 		
-		
+		verify(jdbcTemplate).query(
+				eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"), 
+				any(BookDaoImpl.BookRowMapper.class),
+				eq("898-1-4744-4373-5")
+		);
 	}
 }
