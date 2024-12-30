@@ -81,5 +81,40 @@ public class BookDaoImplIntegrationTest {
 			.containsExactly(bookA, bookC, bookB);
 		
 	}
+	
+	
+	@Test
+	public void testThatBookCanBeUpdated() {
+		Author author = TestDataUtil.createTestAuthor();
+		authorDao.create(author);
+		
+		Book bookA = TestDataUtil.createTestBookA();
+		bookA.setAuthorId(author.getId());
+		underTest.create(bookA);
+		log.info("Book for test: {}", bookA);
+		bookA.setTitle("UPDATED");
+		underTest.update(bookA.getIsbn(), bookA);
+		
+		Optional<Book> result = underTest.findByIsbn(bookA.getIsbn());
+		log.info("Book after Update: {}", result.get());
+		assertThat(result).isPresent();
+		assertThat(result.get()).isEqualTo(bookA);
+	}
+	
+	@Test
+	public void testThatBookCanBeDeleted() {
+		Author author = TestDataUtil.createTestAuthor();
+		authorDao.create(author);
+		
+		Book bookA = TestDataUtil.createTestBookA();
+		bookA.setAuthorId(author.getId());
+		underTest.create(bookA);
+		
+		underTest.delete(bookA.getIsbn());
+		
+		Optional<Book> result = underTest.findByIsbn(bookA.getIsbn());
+		
+		assertThat(result).isEmpty();
+	}
 
 }

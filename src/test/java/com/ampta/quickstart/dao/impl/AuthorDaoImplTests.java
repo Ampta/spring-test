@@ -44,7 +44,7 @@ public class AuthorDaoImplTests {
 	@Test
 	public void testThatFindOneGeneratesCurrectSql() {
 		underTest.findOne(1L);
-		
+		 
 		verify(jdbcTemplate).query(
 				eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"), 
 				any(AuthorDaoImpl.AuthorRowMapper.class),
@@ -62,4 +62,26 @@ public class AuthorDaoImplTests {
 			any(AuthorDaoImpl.AuthorRowMapper.class));
 	}
 	
+	
+	@Test
+	public void testThatUpdateGeneratesCurrectSql() {
+		
+		Author author = TestDataUtil.createTestAuthor();
+		
+		underTest.update(2L, author);
+		
+		verify(jdbcTemplate).update(
+					"UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
+					1L, "Nakanu Gupta", 20, 2L
+				);
+	}
+	
+	
+	@Test
+	public void testThatDeleteGeneratesCurrectSql() {
+		underTest.delete(1L);
+		verify(jdbcTemplate).update(
+				"DELETE FROM authors WHERE id = ?",
+				1L);
+	}
 }

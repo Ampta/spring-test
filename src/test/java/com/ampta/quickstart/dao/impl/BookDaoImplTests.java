@@ -55,6 +55,29 @@ public class BookDaoImplTests {
 		
 		verify(jdbcTemplate).query(
 					eq("SELECT isbn, title, author_id FROM books"), 
-					any(BookDaoImpl.BookRowMapper.class));
+					any(BookDaoImpl.BookRowMapper.class)
+		);
+	}
+	
+	@Test
+	public void testThatUpdateGeneratesCurrectSql() {
+		Book book = TestDataUtil.createTestBook();
+		underTest.update("898-1-4744-4373-5", book);
+		
+		verify(jdbcTemplate).update(
+				"UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?",
+				"898-1-4744-4373-5", "Anjali Changed my Life", 1L, "898-1-4744-4373-5"
+		);
+	}
+	
+	
+	@Test
+	public void testThatDeleteGeneratesCurrectSql() {
+		underTest.delete("898-1-4744-4373-5");
+		
+		verify(jdbcTemplate).update(
+					"DELETE FROM books WHERE isbn = ?",
+					"898-1-4744-4373-5"
+		);
 	}
 }
