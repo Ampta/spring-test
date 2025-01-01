@@ -1,6 +1,7 @@
 package com.ampta.quickstart.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,16 @@ public class BookController {
 				.map(bookMapper:: mapTo)
 				.collect(Collectors.toList());
 		
+	}
+	
+	@GetMapping("/{isbn}")
+	public ResponseEntity<BookDto> getBookByIsbn(@PathVariable("isbn") String isbn){
+		
+		Optional<BookEntity> foundBook = bookService.findOne(isbn);
+		return foundBook.map(bookEntity -> {
+			BookDto bookDto = bookMapper.mapTo(bookEntity);
+			return new ResponseEntity<>(bookDto, HttpStatus.OK);
+		}).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
 }

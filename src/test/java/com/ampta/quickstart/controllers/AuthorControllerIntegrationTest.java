@@ -113,7 +113,7 @@ public class AuthorControllerIntegrationTest {
 	
 	
 	@Test
-	public void testThatGetAuthorReturnsHTTP200WhenAuthorExist() throws Exception {
+	public void testThatGetAuthorReturnsHTTP200WhenAuthorExists() throws Exception {
 		
 		AuthorEntity testAuthor = TestDataUtil.createTestAuthorA();
 		authorService.createAuthor(testAuthor);
@@ -127,7 +127,7 @@ public class AuthorControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testThatGetAuthorReturnsAuthorWhenAuthorExist() throws Exception {
+	public void testThatGetAuthorReturnsAuthorWhenAuthorExists() throws Exception {
 		
 		AuthorEntity testAuthor = TestDataUtil.createTestAuthorA();
 		authorService.createAuthor(testAuthor);
@@ -147,7 +147,7 @@ public class AuthorControllerIntegrationTest {
 	}
 
 	@Test
-	public void testThatGetAuthorReturnsHTTP404WhenAuthorNotExist() throws Exception {
+	public void testThatGetAuthorReturnsHTTP404WhenAuthorNotExists() throws Exception {
 		
 		mockMvc.perform(
 				MockMvcRequestBuilders.get("/authors/99")
