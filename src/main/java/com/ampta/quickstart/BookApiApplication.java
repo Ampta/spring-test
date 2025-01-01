@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
-public class QuickstartApplication {
+public class BookApiApplication {
 
 	
 	public static void main(String[] args) {
-		SpringApplication.run(QuickstartApplication.class, args);
+		SpringApplication.run(BookApiApplication.class, args);
 	}
 
 	

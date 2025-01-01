@@ -13,7 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import com.ampta.quickstart.TestDataUtil;
-import com.ampta.quickstart.domain.Author;
+import com.ampta.quickstart.domain.entity.AuthorEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,11 +37,11 @@ public class AuthorRepositoryIntegrationTest {
 
 //	@Test
 	public void testThatAuthorCanBeCreatedAndRecalled() {
-		Author authorA = TestDataUtil.createTestAuthorA();
+		AuthorEntity authorA = TestDataUtil.createTestAuthorA();
 		log.info("Author for test: {}", authorA);
 		
 		underTest.save(authorA);
-		Optional<Author> result = underTest.findById(authorA.getId());
+		Optional<AuthorEntity> result = underTest.findById(authorA.getId());
 		
 		log.info("Author from database: {}", result);
 		
@@ -52,16 +52,16 @@ public class AuthorRepositoryIntegrationTest {
 	
 //	@Test
 	public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
-		Author authorA = TestDataUtil.createTestAuthorA();
+		AuthorEntity authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
 		
-		Author authorB = TestDataUtil.createTestAuthorB();
+		AuthorEntity authorB = TestDataUtil.createTestAuthorB();
 		underTest.save(authorB);
 		
-		Author authorC = TestDataUtil.createTestAuthorC();
+		AuthorEntity authorC = TestDataUtil.createTestAuthorC();
 		underTest.save(authorC);
 		
-		Iterable<Author> result = underTest.findAll();
+		Iterable<AuthorEntity> result = underTest.findAll();
 		
 		log.info("List of authors: {}", result);
 		
@@ -73,12 +73,12 @@ public class AuthorRepositoryIntegrationTest {
 	
 //	@Test 
 	public void testThatAuthorCanBeUpdated() {
-		Author authorA = TestDataUtil.createTestAuthorA();
+		AuthorEntity authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
 		authorA.setName("UPDATED");
 		underTest.save(authorA);
 		
-		Optional<Author> result = underTest.findById(authorA.getId());
+		Optional<AuthorEntity> result = underTest.findById(authorA.getId());
 		
 		assertThat(result).isPresent();
 		assertThat(result.get()).isEqualTo(authorA );
@@ -88,28 +88,28 @@ public class AuthorRepositoryIntegrationTest {
 	
 //	@Test 
 	public void testThatAuthorCanBeDeleted() {
-		Author authorA = TestDataUtil.createTestAuthorA();
+		AuthorEntity authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
 		
 		underTest.deleteById(authorA.getId());
 		
-		Optional<Author> result = underTest.findById(authorA.getId());
+		Optional<AuthorEntity> result = underTest.findById(authorA.getId());
 		assertThat(result).isEmpty();
 	}
 	
 	@Test
 	public void testThatGetAuthorsWithAgeLessThan() {
-		Author authorA = TestDataUtil.createTestAuthorA();
+		AuthorEntity authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
 		
-		Author authorB = TestDataUtil.createTestAuthorB();
+		AuthorEntity authorB = TestDataUtil.createTestAuthorB();
 		underTest.save(authorB);
 		
-		Author authorC = TestDataUtil.createTestAuthorC();
+		AuthorEntity authorC = TestDataUtil.createTestAuthorC();
 		underTest.save(authorC);
 		
 		int age = 26;
-		Iterable<Author> result = underTest.ageLessThan(age);
+		Iterable<AuthorEntity> result = underTest.ageLessThan(age);
 		
 		log.info("Age Less than {} authors are: {}", age, result);
 		
@@ -118,17 +118,17 @@ public class AuthorRepositoryIntegrationTest {
 	
 	@Test
 	public void testThatGetAuthorsWithAgeGreaterThan() {
-		Author authorA = TestDataUtil.createTestAuthorA();
+		AuthorEntity authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
 		
-		Author authorB = TestDataUtil.createTestAuthorB();
+		AuthorEntity authorB = TestDataUtil.createTestAuthorB();
 		underTest.save(authorB);
 		
-		Author authorC = TestDataUtil.createTestAuthorC();
+		AuthorEntity authorC = TestDataUtil.createTestAuthorC();
 		underTest.save(authorC);
 		
 		int age = 100;
-		Iterable<Author> result = underTest.findAuthorsWithAgeGreaterThan(age);
+		Iterable<AuthorEntity> result = underTest.findAuthorsWithAgeGreaterThan(age);
 		
 		log.info("Age Greater than {} authors are: {}", age, result);
 		

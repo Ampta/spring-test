@@ -1,4 +1,4 @@
-package com.ampta.quickstart.domain;
+package com.ampta.quickstart.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name="authors")
-public class Author {
+public class AuthorEntity{
 	
 	
 	@Id
