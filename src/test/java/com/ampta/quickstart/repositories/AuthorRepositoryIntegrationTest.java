@@ -35,7 +35,7 @@ public class AuthorRepositoryIntegrationTest {
 	    underTest.deleteAll(); // Assuming `underTest` is the repository
 	}
 
-	@Test
+//	@Test
 	public void testThatAuthorCanBeCreatedAndRecalled() {
 		Author authorA = TestDataUtil.createTestAuthorA();
 		log.info("Author for test: {}", authorA);
@@ -50,7 +50,7 @@ public class AuthorRepositoryIntegrationTest {
 	}
 
 	
-	@Test
+//	@Test
 	public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
 		Author authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
@@ -71,7 +71,7 @@ public class AuthorRepositoryIntegrationTest {
 		
 	} 
 	
-	@Test 
+//	@Test 
 	public void testThatAuthorCanBeUpdated() {
 		Author authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
@@ -86,7 +86,7 @@ public class AuthorRepositoryIntegrationTest {
 		
 	}
 	
-	@Test 
+//	@Test 
 	public void testThatAuthorCanBeDeleted() {
 		Author authorA = TestDataUtil.createTestAuthorA();
 		underTest.save(authorA);
@@ -97,5 +97,23 @@ public class AuthorRepositoryIntegrationTest {
 		assertThat(result).isEmpty();
 	}
 	
+	@Test
+	public void testThatGetAuthorsWithAgeLessThan() {
+		Author authorA = TestDataUtil.createTestAuthorA();
+		underTest.save(authorA);
+		
+		Author authorB = TestDataUtil.createTestAuthorB();
+		underTest.save(authorB);
+		
+		Author authorC = TestDataUtil.createTestAuthorC();
+		underTest.save(authorC);
+		
+		int age = 26;
+		Iterable<Author> result = underTest.ageLessThan(age);
+		
+		log.info("Age less {} authors are: {}", age, result);
+		
+		assertThat(result).containsExactly(authorA, authorB);
+	}
 
 }

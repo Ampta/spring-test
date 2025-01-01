@@ -8,4 +8,7 @@ import com.ampta.quickstart.domain.Author;
 @Repository
 public interface AuthorRepository extends CrudRepository<Author, Long>{
 
+	
+	Iterable<Author> ageLessThan(int age);
 }
+
