@@ -1,6 +1,11 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:postgres;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
     username: sa
     password: password
     driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true  # Enables H2 console for debugging
+      path: /h2-console  # Path to access H2 console
+

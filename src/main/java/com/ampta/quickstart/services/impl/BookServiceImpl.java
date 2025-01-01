@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ampta.quickstart.domain.entity.BookEntity;
@@ -60,6 +62,11 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public void delete(String isbn) {
 		bookRepository.deleteById(isbn);
+	}
+
+	@Override
+	public Page<BookEntity> findAll(Pageable pageable) {
+		return bookRepository.findAll(pageable);
 	}
 
 

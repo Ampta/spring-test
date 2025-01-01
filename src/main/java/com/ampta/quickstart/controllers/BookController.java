@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,26 +47,24 @@ public class BookController {
 		
 		BookDto savedBookDto = bookMapper.mapTo(savedBookEntity);
 		
-//		return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
 		
-		if(bookExists) {
+		if(!bookExists) {
 			 // Update the Book
-			return new ResponseEntity<>(savedBookDto, HttpStatus.OK); 
+			return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
 		}else {
 			// Create the Book
-			return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED); 
+			return new ResponseEntity<>(savedBookDto, HttpStatus.OK); 
+			 
 		}
 		
 	}
 	
 	
 	@GetMapping
-	public List<BookDto> listOfBooks(){
-		List<BookEntity> books = bookService.findAll();
+	public Page<BookDto> listOfBooks(Pageable pageable){
+		Page<BookEntity> books = bookService.findAll(pageable);
 		
-		return books.stream()
-				.map(bookMapper:: mapTo)
-				.collect(Collectors.toList());
+		return books.map(bookMapper::mapTo);
 		
 	}
 	
