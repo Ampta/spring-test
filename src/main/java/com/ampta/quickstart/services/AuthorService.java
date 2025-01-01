@@ -7,11 +7,15 @@ import com.ampta.quickstart.domain.entity.AuthorEntity;
 
 public interface AuthorService {
 	
-	AuthorEntity createAuthor(AuthorEntity author);
+	AuthorEntity save(AuthorEntity author);
 
 	List<AuthorEntity> findAll();
 
 	Optional<AuthorEntity> findOne(Long id);
+
+	boolean isExists(Long id);
+
+	AuthorEntity partialUpdate(Long id, AuthorEntity authorEntity);
 	
 	
 	

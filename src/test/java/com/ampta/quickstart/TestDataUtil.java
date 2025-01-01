@@ -1,5 +1,6 @@
 package com.ampta.quickstart;
 
+import com.ampta.quickstart.domain.dto.AuthorDto;
 import com.ampta.quickstart.domain.dto.BookDto;
 import com.ampta.quickstart.domain.entity.AuthorEntity;
 import com.ampta.quickstart.domain.entity.BookEntity;
@@ -8,6 +9,14 @@ public final class TestDataUtil {
 	
 	private TestDataUtil() {}
 
+	 
+	public static AuthorDto createTestAuthor() {
+		return AuthorDto.builder()
+				.name("Anjali Gupta")
+				.age(25)
+				.build();
+	}
+	
 	public static AuthorEntity createTestAuthorA() {
 		return AuthorEntity.builder()
 				.name("Shivam Gupta")
@@ -55,6 +64,14 @@ public final class TestDataUtil {
 	}
 	
 	public static BookDto createTestBookDto(final AuthorEntity author) {
+		return BookDto.builder()
+				.isbn("198-9-5749-4373-0")
+				.title("wHo tELe WhoM")
+				.author(author)
+				.build();
+	}
+	
+	public static BookDto createTestBookDtoTest(final AuthorEntity author) {
 		return BookDto.builder()
 				.isbn("198-9-5749-4373-0")
 				.title("wHo tELe WhoM")
