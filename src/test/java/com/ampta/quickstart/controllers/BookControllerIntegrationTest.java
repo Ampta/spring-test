@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.ampta.quickstart.TestDataUtil;
 import com.ampta.quickstart.domain.dto.BookDto;
+import com.ampta.quickstart.domain.entity.BookEntity;
+import com.ampta.quickstart.services.BookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,10 +30,15 @@ public class BookControllerIntegrationTest {
 
 	private ObjectMapper objectMapper;
 	
+	private BookService bookService;
+	
 	@Autowired
-	public BookControllerIntegrationTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+	public BookControllerIntegrationTest(MockMvc mockMvc, 
+			ObjectMapper objectMapper,
+			BookService bookService) {
 		this.mockMvc = mockMvc;
 		this.objectMapper = new ObjectMapper();
+		this.bookService = bookService;
 	}
 	
 	@Test
@@ -66,5 +73,34 @@ public class BookControllerIntegrationTest {
 					MockMvcResultMatchers.jsonPath("$.title").value(bookDto.getTitle())
 			);
 		
+	}
+	
+	@Test
+	public void testThatListBooksReturnsHTTP200Ok() throws Exception {
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.get("/books")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(
+				MockMvcResultMatchers.status().isOk()
+			);
+		
+	}
+	
+	@Test
+	public void testThatListBookReturnsBook() throws Exception {
+		
+		BookEntity bookEntity = TestDataUtil.createTestBookA(null);
+		bookService.createBook(bookEntity.getIsbn(), bookEntity);
+		
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.get("/books")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(
+					MockMvcResultMatchers.jsonPath("$[0].isbn").value("198-9-5749-4373-0")
+			).andExpect(
+					MockMvcResultMatchers.jsonPath("$[0].title").value("wHo tELe WhoM")
+			);
 	}
 }

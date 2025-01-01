@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.ampta.quickstart.TestDataUtil;
 import com.ampta.quickstart.domain.entity.AuthorEntity;
+import com.ampta.quickstart.repositories.AuthorRepository;
 import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,10 +30,15 @@ public class AuthorControllerIntegrationTest {
 
 	private ObjectMapper objectMapper;
 	
+	private AuthorRepository authorRepository;
+	
 	@Autowired
-	public AuthorControllerIntegrationTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+	public AuthorControllerIntegrationTest(MockMvc mockMvc, 
+			ObjectMapper objectMapper, 
+			AuthorRepository authorRepository) {
 		this.mockMvc = mockMvc;
 		this.objectMapper = new ObjectMapper();
+		this.authorRepository = authorRepository;
 	}
 	
 	@Test
@@ -73,5 +79,33 @@ public class AuthorControllerIntegrationTest {
 				);
 	}
 	
+	@Test
+	public void testThatListAuthorsReturnsHTTP200Ok() throws Exception {
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.get("/authors")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(MockMvcResultMatchers.status().isOk());
+	}
 	
+	
+	@Test
+	public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
+		
+		AuthorEntity testAuthor = TestDataUtil.createTestAuthorA();
+		authorRepository.save(testAuthor);
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.get("/authors")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(
+				MockMvcResultMatchers.jsonPath("$[0].id").isNumber()
+			).andExpect(
+					MockMvcResultMatchers.jsonPath("$[0].name").value("Shivam Gupta")
+			).andExpect(
+					MockMvcResultMatchers.jsonPath("$[0].age").value(25)
+			);
+	}
+
+
 }

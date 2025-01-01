@@ -1,7 +1,11 @@
 package com.ampta.quickstart.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +42,17 @@ public class BookController {
 		BookDto savedBookDto = bookMapper.mapTo(savedBookEntity);
 		
 		return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
+	}
+	
+	
+	@GetMapping
+	public List<BookDto> listOfBooks(){
+		List<BookEntity> books = bookService.findAll();
+		
+		return books.stream()
+				.map(bookMapper:: mapTo)
+				.collect(Collectors.toList());
+		
 	}
 
 }
