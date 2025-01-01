@@ -18,8 +18,6 @@ import com.ampta.quickstart.domain.dto.AuthorDto;
 import com.ampta.quickstart.domain.entity.AuthorEntity;
 import com.ampta.quickstart.repositories.AuthorRepository;
 import com.ampta.quickstart.services.AuthorService;
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -248,5 +246,26 @@ public class AuthorControllerIntegrationTest {
 			);
 	}
 	
+	@Test
+	public void testThatDeleteAuthorReturnsHTTP204ForNonExistingAuthor() throws Exception {
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.delete("/authors/99")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(MockMvcResultMatchers.status().isNoContent());
+		
+	}
+	
+//	@Test
+	public void testThatDeleteAuthorReturnsHTTP204ForExistingAuthor() throws Exception {
+		AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+		AuthorEntity savedAuthor = authorService.save(authorEntity);
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.patch("/authors/" + savedAuthor.getId())
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(MockMvcResultMatchers.status().isNoContent());
+		
+	}
 	 
 }

@@ -98,7 +98,7 @@ public class BookControllerIntegrationTest {
 				MockMvcRequestBuilders.get("/books")
 					.contentType(MediaType.APPLICATION_JSON)
 			).andExpect(
-					MockMvcResultMatchers.jsonPath("$[0].isbn").value("kfsjldf")
+					MockMvcResultMatchers.jsonPath("$[0].isbn").value("198-9-5749-4373-0")
 			).andExpect(
 					MockMvcResultMatchers.jsonPath("$[0].title").value("wHo tELe WhoM")
 			);
@@ -222,6 +222,31 @@ public class BookControllerIntegrationTest {
 					MockMvcResultMatchers.jsonPath("$.isbn").value(bookEntity.getIsbn())
 			).andExpect(
 					MockMvcResultMatchers.jsonPath("$.title").value("UPDATED")
+			);
+	}
+	
+	@Test
+	public void testThatDeleteBookReturnsHTTP200NonExistingBook() throws Exception{
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.delete("/books/99")
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(
+					MockMvcResultMatchers.status().isNoContent()
+			);
+	}
+	
+	@Test
+	public void testThatDeleteBookReturnsHTTP200ExistingBook() throws Exception{
+		BookEntity bookEntity = TestDataUtil.createTestBookA(null);
+		bookService.createBook(bookEntity.getIsbn(), bookEntity);
+		
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.delete("/books/" + bookEntity.getIsbn())
+					.contentType(MediaType.APPLICATION_JSON)
+			).andExpect(
+					MockMvcResultMatchers.status().isNoContent()
 			);
 	}
 	
